@@ -14,9 +14,7 @@ $app = new Slim();
 $app->config('debug', true);
 $app->get('/', function() {
 	$page = new Page();
-
 	$page->setTpl("index");
-
 });
 $app->get('/admin', function() {
 
@@ -230,6 +228,13 @@ $app->post("/admin/categories/:idcategory", function($idcategory){
 
 	header('Location: /admin/categories');
 	exit;
+});
+$app->get("/categories/:idcategory", function($idcategory){
+	$category = new Category();
+	$category->get((int)$idcategory);
+
+	$page = new Page();
+	$page->setTpl("category", ['category'=>getValues(), 'products'=>[]]);
 });
 $app->run();
 
